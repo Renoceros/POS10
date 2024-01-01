@@ -8,7 +8,7 @@ tadinya pun mau ada forget pasword function, gajadi 😀🙏
 
 **saya capek batin 😀🙏**
 
-saya mau jelasin knp ini saya kerja sendiri,
+saya mau jelasin knp ini saya kerja sendiri(+ivan kerjain db SQLite),
 Toby dan Andy itu weaponize Incompetence
 mereka dh tau gabisa, tp biarin aja gabisa,
 sy takut klo saya kasih mrk pegang hal selain UI nanti class2 yang harusnya bisa malah mereka berantakan
