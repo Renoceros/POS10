@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@drawable/appbg">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/LoginTitle"
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:fontFamily="@font/alata"
+            android:paddingTop="30dp"
+            android:text="POS KEL 10"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#173E8C"
+            android:textSize="72sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+
+        <EditText
+            android:id="@+id/UserID_Input"
+            android:layout_width="272dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:ems="10"
+            android:inputType="number|numberDecimal"
+            android:hint="User ID"
+            android:textColorHint="#173E8B"
+            tools:layout_editor_absoluteX="100dp"
+            tools:layout_editor_absoluteY="223dp" />
+
+        <EditText
+            android:id="@+id/Password_Input"
+            android:layout_width="271dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="text|textPassword"
+            android:textColorHint="#173E8B"
+            android:visibility="visible"
+            tools:layout_editor_absoluteX="100dp"
+            tools:layout_editor_absoluteY="298dp" />
+
+        <Button
+            android:id="@+id/Login_Button"
+            android:layout_width="161dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/your_everything_color"
+            android:text="Log In"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="150dp"
+            android:scaleX="2"
+            android:scaleY="2"
+            android:src="@drawable/kel10"
+            android:translationY="-60dp" />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

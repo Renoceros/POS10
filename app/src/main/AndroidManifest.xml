@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- Declare camera feature -->
+    <uses-feature android:name="android.hardware.camera.any" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <!-- Request camera permission -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.POS10"
+        tools:targetApi="31"
+        >
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Home_Admin_Activity"
+            android:label="Home Admin">
+        </activity>
+        <activity
+            android:name=".ScannerAdminActivity"
+            android:label="Scan Admin">
+        </activity>
+        <activity
+            android:name=".Home_Cashier_Activity"
+            android:label="Home Cashier">
+        </activity>
+        <activity
+            android:name=".ScannerActivity"
+            android:label="Scanner Activity">
+        </activity>
+        <activity
+            android:name=".HistoryActivity"
+            android:label="History Activity">
+        </activity>
+        <activity
+            android:name=".StockActivity"
+            android:label="Stock Activity">
+        </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="Profile Activity">
+        </activity>
+        <activity
+            android:name=".PurchasesActivity"
+            android:label="Purchase Activity">
+        </activity>
+        <activity
+            android:name=".TransactionsActivity"
+            android:label="Transaction Activity">
+        </activity>
+        <activity
+            android:name=".LogsActivity"
+            android:label="Log Activity">
+        </activity>
+        <activity
+            android:name=".CartAdapter"
+            android:label="Cart Activity">
+        </activity>
+        <activity
+            android:name=".CheckoutActivity"
+            android:label="Checkout Activity">
+        </activity>
+        <activity
+            android:name=".ReceiptActivity"
+            android:label="Receipt Activity">
+        </activity>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>

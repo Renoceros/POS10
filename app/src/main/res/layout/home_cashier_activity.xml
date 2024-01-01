@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home_Cashier_Activity"
+    android:background="@drawable/appbg"
+    >
+
+    <LinearLayout
+        android:id="@+id/topRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#19000000"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/Page_Title"
+            android:layout_width="222dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:autoSizeMaxTextSize="32dp"
+            android:autoSizeMinTextSize="12sp"
+            android:autoSizeTextType="uniform"
+            android:text="HOME CASHIER"
+            android:textColor="@color/your_everything_color"
+            android:textStyle="bold" />
+
+        <TextClock
+            android:id="@+id/textClock"
+            android:layout_width="104dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:textColor="@color/clock_red"
+            android:textSize="24sp"
+            android:textStyle="italic|bold" />
+
+        <ImageButton
+            android:id="@+id/Profile_Button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:tint="@color/your_everything_color"
+            app:srcCompat="@android:drawable/ic_dialog_info"
+            android:contentDescription="Profile Button"
+            tools:ignore="UseAppTint"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="50dp"
+        android:orientation="vertical"
+        android:outlineAmbientShadowColor="#423737"
+        android:outlineProvider="bounds"
+        android:outlineSpotShadowColor="#2196F3">
+
+        <ImageButton
+            android:id="@+id/Scanner_Button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@color/buttonbg"
+            android:clipToOutline="true"
+            android:forceDarkAllowed="false"
+            android:outlineProvider="bounds"
+            app:srcCompat="@drawable/scannerico"
+            app:tint="@color/your_everything_color" />
+
+        <TextView
+            android:id="@+id/Scanner_Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:text="Scanner"
+            android:textAlignment="center"
+            android:textColor="@color/your_everything_color"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/History_Button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:background="@color/buttonbg"
+            android:clipToOutline="true"
+            android:forceDarkAllowed="false"
+            android:outlineProvider="bounds"
+            app:srcCompat="@drawable/history"
+            app:tint="@color/your_everything_color" />
+
+
+        <TextView
+            android:id="@+id/History_Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:text="History"
+            android:textAlignment="center"
+            android:textColor="@color/your_everything_color"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/Stock_Button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:background="@color/buttonbg"
+            android:clipToOutline="true"
+            android:forceDarkAllowed="false"
+            android:outlineProvider="bounds"
+            app:srcCompat="@drawable/stock"
+            app:tint="@color/your_everything_color" />
+
+        <TextView
+            android:id="@+id/Stock_Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:text="Stock"
+            android:textAlignment="center"
+            android:textColor="@color/your_everything_color"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

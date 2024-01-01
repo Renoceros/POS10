@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/receiptItemCardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:background="?android:attr/selectableItemBackground">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textNameReceiptItem"
+                android:layout_width="146dp"
+                android:layout_height="match_parent"
+                android:text="Thingamajig 20100" />
+
+            <TextView
+                android:id="@+id/textQuantityReceiptItem"
+                android:layout_width="41dp"
+                android:layout_height="match_parent"
+                android:text="21"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/textPriceReceiptItem"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="388008888"/>
+
+            <TextView
+                android:id="@+id/textSubtotReceiptItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:textAlignment="textEnd"
+                android:textStyle="bold"
+                android:text="99988888888"/>
+        </LinearLayout>
+
+    </RelativeLayout></androidx.cardview.widget.CardView>

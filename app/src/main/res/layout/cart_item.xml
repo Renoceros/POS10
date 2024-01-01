@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cartItemCardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:background="?android:attr/selectableItemBackground">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/itembg"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textIdCartItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="10030"></TextView>
+
+        <TextView
+            android:id="@+id/textNameCartItem"
+            android:layout_width="84dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textStyle="bold"
+            android:text="Thingamajig 20100"></TextView>
+
+        <TextView
+            android:id="@+id/textQuantityCartItem"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:textStyle="bold"
+            android:text="21"></TextView>
+
+        <TextView
+            android:id="@+id/textPriceCartItem"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:text="3888888"></TextView>
+
+        <TextView
+            android:id="@+id/textSubtotCartItem"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:textStyle="bold"
+            android:text="99988888888"></TextView>
+    </LinearLayout>
+
+</RelativeLayout></androidx.cardview.widget.CardView>

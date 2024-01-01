@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CheckoutActivity"
+    android:background="@drawable/appbg"
+    >
+    <LinearLayout
+        android:id="@+id/topRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#19000000"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/Page_Title"
+            android:layout_width="222dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:autoSizeMaxTextSize="32dp"
+            android:autoSizeMinTextSize="16sp"
+            android:autoSizeTextType="uniform"
+            android:text="CHECKOUT"
+            android:textColor="@color/your_everything_color"
+            android:textStyle="bold" />
+
+        <TextClock
+            android:id="@+id/textClock"
+            android:layout_width="104dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:textColor="@color/clock_red"
+            android:textSize="24sp"
+            android:textStyle="italic|bold" />
+
+        <ImageButton
+            android:id="@+id/Profile_Button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:tint="@color/your_everything_color"
+            app:srcCompat="@android:drawable/ic_dialog_info"
+            android:contentDescription="Profile Button"
+            tools:ignore="UseAppTint"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="fill_horizontal"
+        android:orientation="vertical"
+        android:layout_marginTop="60dp">
+
+        <TextView
+            android:id="@+id/TotalNetTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Total Net    : Rp "
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+            <TextView
+            android:id="@+id/TaxTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="          Tax    : Rp "
+            android:textSize="20sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="fill_horizontal"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:id="@+id/TipTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="          Tip     : Rp "
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/editTipText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number" />
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="10dp"
+            android:background="#FF0000" />
+
+        <TextView
+            android:id="@+id/TotalTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Total Gross : Rp "
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="fill_horizontal"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:id="@+id/CashTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cash            : Rp "
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editCashText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number" />
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="10dp"
+            android:background="#FF0000" />
+        <TextView
+            android:id="@+id/ChangeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Change       : Rp "
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Print Receipt"
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:id="@+id/FinalizeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/your_everything_color"
+            android:text="FINALIZE ORDER"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>
