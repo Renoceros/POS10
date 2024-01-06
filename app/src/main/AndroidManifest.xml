@@ -73,7 +73,7 @@
             android:label="Log Activity">
         </activity>
         <activity
-            android:name=".CartAdapter"
+            android:name=".ScannerAdapter"
             android:label="Cart Activity">
         </activity>
         <activity

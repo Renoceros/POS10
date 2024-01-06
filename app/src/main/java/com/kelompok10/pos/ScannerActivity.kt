@@ -34,30 +34,34 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class ScannerActivity : AppCompatActivity() {
+    private val cartItems = mutableListOf<CartItem>()
     private lateinit var pageTitle: TextView
-    private lateinit var textClock: TextView
+    private lateinit var textClock: TextClock
     private lateinit var profileButton: ImageButton
     private lateinit var captureButton: Button
-    private lateinit var checkoutButton: Button
     private lateinit var binding: ScannerActivityBinding
     private lateinit var barcodeScanner: BarcodeScanner
     private lateinit var cameraExecutor: ExecutorService
-    private val cartItems = mutableListOf<CartItem>()
-    private lateinit var cartRecyclerView: RecyclerView
-    private lateinit var cartAdapter: CartAdapter
-
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var scannerAdapter: ScannerAdapter
+    private lateinit var checkoutButton : Button
     private var imageCapture: ImageCapture? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.scanner_activity)
-
-        pageTitle = findViewById(R.id.Page_Title)
-        textClock = findViewById(R.id.textClock)
-        profileButton = findViewById(R.id.Profile_Button)
-        captureButton = findViewById(R.id.ScanButton)
-        checkoutButton = findViewById(R.id.CheckoutButton)
         binding = ScannerActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        pageTitle = binding.PageTitle
+        textClock = binding.textClock
+        profileButton = binding.ProfileButton
+        captureButton = binding.ScanButton
+        checkoutButton = binding.CheckoutButton
+
+        profileButton.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
 
         val options = BarcodeScannerOptions.Builder()
             .setBarcodeFormats(Barcode.FORMAT_CODE_128)
@@ -66,9 +70,9 @@ class ScannerActivity : AppCompatActivity() {
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
-        // Check camera permissions
         if (allPermissionGranted()) {
             startCamera()
+            Log.d(CONST.OoH,"ScannerActivity : camera started")
         } else {
             ActivityCompat.requestPermissions(
                 this,
@@ -76,30 +80,24 @@ class ScannerActivity : AppCompatActivity() {
                 REQUEST_CODE_PERMISSIONS
             )
         }
-
-        profileButton.setOnClickListener {
-            val intent = Intent(this, ProfileActivity::class.java)
+        checkoutButton.setOnClickListener{
+            Log.d(CONST.OoH,"ScannerActivity : Checkout")
+            startActivity(Intent(this, CheckoutActivity::class.java))
+            intent.putExtra("cartItems", ArrayList(cartItems))
             startActivity(intent)
         }
 
         captureButton.setOnClickListener {
             takePicture()
+            Log.d(CONST.OoH,"ScannerActivity : picture taken")
         }
-
-        checkoutButton.setOnClickListener {
-            val intent = Intent(this, CheckoutActivity::class.java)
-            intent.putExtra("cartItems", ArrayList(cartItems))
-            startActivity(intent)
-        }
-
-        // Set up RecyclerView
-        cartRecyclerView = findViewById(R.id.recyclerView)
-        cartAdapter = CartAdapter(cartItems) { clickedItem ->
-            showEditCartPopup(clickedItem)
-        }
-
-        cartRecyclerView.layoutManager = LinearLayoutManager(this)
-        cartRecyclerView.adapter = cartAdapter
+        recyclerView = binding.recyclerView
+        scannerAdapter = ScannerAdapter(cartItems,
+            onItemClick = { showEditCartPopup(it) },
+            onEditClick = { }
+        )
+        recyclerView.adapter = scannerAdapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
     private fun allPermissionGranted() =
@@ -138,7 +136,7 @@ class ScannerActivity : AppCompatActivity() {
 
                 cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis)
             } catch (e: Exception) {
-                Log.e(CONST.TAG, "Use case binding failed", e)
+                Log.e(CONST.OoH, "Use case binding failed", e)
             }
         }, ContextCompat.getMainExecutor(this))
     }
@@ -156,19 +154,10 @@ class ScannerActivity : AppCompatActivity() {
                 }
 
                 override fun onError(exc: ImageCaptureException) {
-                    Log.e(CONST.TAG, "Error capturing image: ${exc.message}", exc)
+                    Log.e(CONST.OoH, "Error capturing image: ${exc.message}", exc)
                 }
             }
         )
-    }
-
-    private fun deleteImageFile(photoFile: File) {
-        if (photoFile.exists()) {
-            val deleted = photoFile.delete()
-            if (!deleted) {
-                Log.e(CONST.TAG, "Failed to delete image file.")
-            }
-        }
     }
 
     private fun analyzeImage(imageUri: Uri) {
@@ -177,29 +166,38 @@ class ScannerActivity : AppCompatActivity() {
         barcodeScanner.process(inputImage)
             .addOnSuccessListener { barcodes ->
                 for (barcode in barcodes) {
+                    Log.d(CONST.OoH,"ScannerActivity : Scan successful")
                     handleBarcode(barcode)
                 }
             }
             .addOnFailureListener { e ->
-                Log.e(CONST.TAG, "Barcode scanning failed: ${e.message}", e)
+                Log.e(CONST.OoH, "Barcode scanning failed: ${e.message}", e)
             }
     }
 
     private fun handleBarcode(barcode: Barcode) {
         val rawValue = barcode.rawValue
         val format = barcode.format
-        Log.d(CONST.TAG, "Barcode raw value: $rawValue, Format: $format")
+        Log.d(CONST.OoH, "ScannerActivity : Barcode raw value: $rawValue, Format: $format")
 
         if (rawValue != null) {
             val rawValueInt = rawValue.toInt()
             val dbHelper = DatabaseHelper(this) // Replace 'context' with your actual context
             val product = dbHelper.getProductById(rawValueInt)
-            Log.d(CONST.TAG, "Product: $product")
-            if (product != null) {
-                showPopup(product)
+            Log.d(CONST.OoH, "ScannerActivity : Product: $product")
+
+            val existingCartItem = cartItems.find { it.id == rawValueInt }
+
+            if (existingCartItem != null) {
+                showEditCartPopup(existingCartItem)
                 vibrate(100)
             } else {
-                showToast("Product not found in the database.")
+                if (product != null) {
+                    showPopup(product)
+                    vibrate(100)
+                } else {
+                    showToast("Product not found in the database.")
+                }
             }
         }
     }
@@ -215,10 +213,19 @@ class ScannerActivity : AppCompatActivity() {
         super.onDestroy()
         cameraExecutor.shutdown()
     }
+    private fun deleteImageFile(photoFile: File) {
+        if (photoFile.exists()) {
+            val deleted = photoFile.delete()
+            if (!deleted) {
+                Log.e(CONST.OoH, "Failed to delete image file.")
+            }
+        }
+    }
     private fun showPopup(product: Product) {
+        Log.d(CONST.OoH,"ScannerActivity : showing add_cart_popup")
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.add_cart_popup)
-
+        Log.d(CONST.OoH,"ScannerActivity : declaring values")
         val textId = dialog.findViewById<TextView>(R.id.textId)
         val textName = dialog.findViewById<TextView>(R.id.textName)
         val textQuantity = dialog.findViewById<TextView>(R.id.textQuantity)
@@ -226,7 +233,7 @@ class ScannerActivity : AppCompatActivity() {
         val btnDecrease = dialog.findViewById<Button>(R.id.btnDecrease)
         val btnIncrease = dialog.findViewById<Button>(R.id.btnIncrease)
         val btnAddToCart = dialog.findViewById<Button>(R.id.btnAddToCart)
-
+        Log.d(CONST.OoH,"ScannerActivity : initializing values")
         textId.text = "ID: ${product.prodId}"
         textName.text = "Name: ${product.name}"
         textQuantity.text = "Quantity: "
@@ -252,14 +259,18 @@ class ScannerActivity : AppCompatActivity() {
 
         btnAddToCart.setOnClickListener {
             // Calculate subTotal based on the product price and quantity
+            Log.d(CONST.OoH,"ScannerActivity : Added to Cart: ${product.name} (Quantity: $quantity)")
             val subTotal = product.price * quantity
-
+            Log.d(CONST.OoH,"ScannerActivity : subTotal counted : Rp ${subTotal}")
             // Add the selected item to the cart
-            val cartItem = CartItem(product.prodId.toString(), product.name, quantity, product.price, subTotal)
-
-            // Use the addItem method to add the new item to the adapter
-            cartAdapter.addItem(cartItem)
-
+            val cartItem = CartItem(product.prodId, product.name,product.stockQtty, quantity, product.price, subTotal)
+            Log.d(CONST.OoH,"ScannerActivity : Put ${product.prodId},${ product.name},${product.stockQtty}," +
+                    "${quantity},${product.price},${subTotal} into CartItem and name it cartItem")
+            cartItems.add(cartItem)
+            Log.d(CONST.OoH,"ScannerActivity : put ${cartItem} into cartItems List")
+            // Notify the adapter that data set has changed
+            scannerAdapter.notifyDataSetChanged()
+            Log.d(CONST.OoH,"ScannerActivity : Notify Scanner Adapter")
             // Optionally, you can display a message or update UI to indicate the item is added to the cart
             Toast.makeText(this, "Added to Cart: ${product.name} (Quantity: $quantity)", Toast.LENGTH_SHORT).show()
 
@@ -269,59 +280,73 @@ class ScannerActivity : AppCompatActivity() {
 
         dialog.show()
     }
-
     private fun showEditCartPopup(cartItem: CartItem) {
-        val dialog = Dialog(this)
-        dialog.setContentView(R.layout.edit_cart_popup)
+        try {
+            Log.d(CONST.OoH, "ScannerActivity: showing edit_cart_popup")
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.edit_cart_popup)
+            val textId = dialog.findViewById<TextView>(R.id.textId)
+            val textName = dialog.findViewById<TextView>(R.id.textName)
+            val textQuantity = dialog.findViewById<TextView>(R.id.textQuantity)
+            val textQuantityValue = dialog.findViewById<TextView>(R.id.textQuantityValue)
+            val btnDecrease = dialog.findViewById<Button>(R.id.btnDecrease)
+            val btnIncrease = dialog.findViewById<Button>(R.id.btnIncrease)
+            val btneditCartItem = dialog.findViewById<Button>(R.id.editCartItemBttn)
 
-        val textId = dialog.findViewById<TextView>(R.id.textId)
-        val textName = dialog.findViewById<TextView>(R.id.textName)
-        val textQuantity = dialog.findViewById<TextView>(R.id.textQuantity)
-        val textQuantityValue = dialog.findViewById<TextView>(R.id.textQuantityValue)
-        val btnDecrease = dialog.findViewById<Button>(R.id.btnDecrease)
-        val btnIncrease = dialog.findViewById<Button>(R.id.btnIncrease)
-        val btnEditCartItem = dialog.findViewById<Button>(R.id.btnAddToCart)
+            textId.text = "ID: ${cartItem.id}"
+            textName.text = "Name: ${cartItem.name}"
+            textQuantity.text = "Quantity: "
 
-        textId.text = "ID: ${cartItem.id}"
-        textName.text = "Name: ${cartItem.name}"
-        textQuantity.text = "Quantity: "
+            var quantity = cartItem.quantity
 
-        var quantity = cartItem.quantity
-        textQuantityValue.text = quantity.toString()
+            btnDecrease.setOnClickListener {
+                if (quantity > 0) {
+                    quantity--
+                    textQuantityValue.text = quantity.toString()
+                }
+            }
 
-        btnDecrease.setOnClickListener {
-            if (quantity > 1) {
-                quantity--
-                textQuantityValue.text = quantity.toString()
+            btnIncrease.setOnClickListener {
+                // Check if the quantity is within available stock
+                if (quantity < cartItem.stockQtty) {
+                    quantity++
+                    textQuantityValue.text = quantity.toString()
+                } else {
+                    Toast.makeText(this, "Reached maximum stock limit", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            btneditCartItem.setOnClickListener {
+                // Delete the product from the list if quantity is 0
+                if (quantity == 0) {
+                    cartItems.remove(cartItem)
+                    scannerAdapter.notifyDataSetChanged()
+                    Toast.makeText(this, "Deleted Cart Item: ${cartItem.name}", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()}
+                else{
+                // Calculate subTotal based on the product price and quantity
+                val subTotal = cartItem.price * quantity
+
+                // Update the quantity in the existing cart item
+                cartItem.quantity = quantity
+                cartItem.subTot = subTotal
+
+                // Notify the adapter that data set has changed
+                scannerAdapter.notifyDataSetChanged()
+                Log.d(CONST.OoH,"ScannerActivity : notifying the dataset change")
+
+                // Optionally, you can display a message or update UI to indicate the item is edited
+                Toast.makeText(this, "Edited Cart Item: ${cartItem.name} (Quantity: $quantity)", Toast.LENGTH_SHORT).show()
+
+                // Dismiss the popup
+                dialog.dismiss()
             }
         }
-
-        btnIncrease.setOnClickListener {
-            // Check if quantity is within available stock
-            if (quantity < getStockQuantityFromDatabase(cartItem.id)) {
-                quantity++
-                textQuantityValue.text = quantity.toString()
-            }
-            else {
-                // Optionally, you can display a message indicating that the stock is limited.
-                Toast.makeText(this, "Reached maximum stock limit", Toast.LENGTH_SHORT).show()
-            }
+            textQuantityValue.text = quantity.toString()
+            dialog.show()} catch (e: Exception) {
+            Log.e(CONST.OoH, "ScannerActivity : Error creating/showing dialog: ${e.message}", e)
         }
-
-        btnEditCartItem.setOnClickListener {
-            // Update the quantity of the cartItem
-            cartItem.quantity = quantity
-
-            // Optionally, you can display a message or update UI to indicate the item is updated in the cart
-            Toast.makeText(this, "Cart item updated: ${cartItem.name} (Quantity: $quantity)", Toast.LENGTH_SHORT).show()
-
-            // Dismiss the popup
-            dialog.dismiss()
-        }
-
-        dialog.show()
     }
-
     private fun vibrate(duration: Long) {
         val vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator?
         if (vibrator?.hasVibrator() == true) {
@@ -332,12 +357,5 @@ class ScannerActivity : AppCompatActivity() {
                 vibrator.vibrate(duration)
             }
         }
-    }
-
-    private fun getStockQuantityFromDatabase(productId: String): Int {
-        // Fetch the product from the database using the productId
-        val dbHelper = DatabaseHelper(this)
-        val product = dbHelper.getProductById(productId.toInt()) // Assuming productId is an integer
-        return product?.stockQtty ?: 0
     }
 }

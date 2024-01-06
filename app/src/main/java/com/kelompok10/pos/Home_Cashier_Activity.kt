@@ -3,6 +3,7 @@ package com.kelompok10.pos
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -41,17 +42,21 @@ class Home_Cashier_Activity : AppCompatActivity() {
             // Handle profile button click
             // For testing, you can display a toast message or navigate to another activity
             // Replace the following line with your actual logic
+            Log.d(CONST.OoH,"Home_Cashier_activity : opening ProfileActivity")
             startActivity(Intent(this, ProfileActivity::class.java))
         }
         scannerButton.setOnClickListener {
+            Log.d(CONST.OoH,"Home_Cashier_activity : opening ScannerActivity")
             startActivity(Intent(this, ScannerActivity::class.java))
         }
 
         historyButton.setOnClickListener {
+            Log.d(CONST.OoH,"Home_Cashier_activity : opening HistoryActivity")
             startActivity(Intent(this, HistoryActivity::class.java))
         }
 
         stockButton.setOnClickListener {
+            Log.d(CONST.OoH,"Home_Cashier_activity : opening StockActivity")
             startActivity(Intent(this, StockActivity::class.java))
         }
     }

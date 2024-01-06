@@ -11,25 +11,32 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/itembg">
 
         <TextView
             android:id="@+id/textIdCartItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_width="41dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:text="10030"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textNameCartItem"
             android:layout_width="84dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
             android:text="Thingamajig 20100"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/textIdCartItem"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -37,29 +44,68 @@
             android:id="@+id/textQuantityCartItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:text="21"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/textNameCartItem"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textRupiah1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Rp."
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            app:layout_constraintStart_toEndOf="@+id/textQuantityCartItem"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textPriceCartItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:text="3888888"
-            app:layout_constraintStart_toEndOf="@+id/textQuantityCartItem"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            app:layout_constraintStart_toEndOf="@+id/textRupiah1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textRupiah2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Rp."
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/textPriceCartItem"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textSubtotCartItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:text="99988888888"
-            app:layout_constraintStart_toEndOf="@+id/textPriceCartItem"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/textRupiah2"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

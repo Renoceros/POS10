@@ -35,8 +35,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:ems="10"
-            android:inputType="number|numberDecimal"
             android:hint="User ID"
+            android:inputType="number|numberDecimal"
+            android:textColorHighlight="#173E8B"
             android:textColorHint="#173E8B"
             tools:layout_editor_absoluteX="100dp"
             tools:layout_editor_absoluteY="223dp" />
@@ -49,6 +50,7 @@
             android:ems="10"
             android:hint="Password"
             android:inputType="text|textPassword"
+            android:textColorHighlight="#173E8B"
             android:textColorHint="#173E8B"
             android:visibility="visible"
             tools:layout_editor_absoluteX="100dp"

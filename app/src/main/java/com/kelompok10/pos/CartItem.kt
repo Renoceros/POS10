@@ -1,9 +1,10 @@
 package com.kelompok10.pos
 
 data class CartItem(
-    val id: String,
+    val id: Int,
     val name: String,
+    val stockQtty: Int,
     var quantity: Int,
     val price: Double,
-    val subTot: Double,
+    var subTot: Double,
 )
