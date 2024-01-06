@@ -152,6 +152,7 @@ class ScannerActivity : AppCompatActivity() {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
                     analyzeImage(savedUri)
+                    deleteImageFile(photoFile)
                 }
 
                 override fun onError(exc: ImageCaptureException) {
@@ -159,6 +160,15 @@ class ScannerActivity : AppCompatActivity() {
                 }
             }
         )
+    }
+
+    private fun deleteImageFile(photoFile: File) {
+        if (photoFile.exists()) {
+            val deleted = photoFile.delete()
+            if (!deleted) {
+                Log.e(CONST.TAG, "Failed to delete image file.")
+            }
+        }
     }
 
     private fun analyzeImage(imageUri: Uri) {
@@ -322,5 +332,12 @@ class ScannerActivity : AppCompatActivity() {
                 vibrator.vibrate(duration)
             }
         }
+    }
+
+    private fun getStockQuantityFromDatabase(productId: String): Int {
+        // Fetch the product from the database using the productId
+        val dbHelper = DatabaseHelper(this)
+        val product = dbHelper.getProductById(productId.toInt()) // Assuming productId is an integer
+        return product?.stockQtty ?: 0
     }
 }
