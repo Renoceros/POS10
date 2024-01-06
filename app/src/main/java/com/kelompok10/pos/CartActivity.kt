@@ -16,8 +16,8 @@ class CartActivity : AppCompatActivity() {
     private lateinit var binding: CartActivityBinding
     private lateinit var cartRecyclerView: RecyclerView
     private lateinit var cartAdapter: CartAdapter
-    val checkoutButton: Button = binding.CheckoutButton
-    private var cartItems: List<CartItem> = emptyList()
+    private lateinit var checkoutButton: Button
+    private var cartItems: MutableList<CartItem> = mutableListOf()  // Change to MutableList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,13 +25,13 @@ class CartActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Retrieve cart items from the intent
-        cartItems = intent.getSerializableExtra("cartItems") as List<CartItem>
+        cartItems = intent.getSerializableExtra("cartItems") as MutableList<CartItem>  // Change to MutableList
+
+        checkoutButton = binding.CheckoutButton
 
         // Set up RecyclerView
-        cartRecyclerView = binding.recyclerView // Use the correct ID here ('recyclerView' from your XML layout)
+        cartRecyclerView = binding.recyclerView
         cartAdapter = CartAdapter(cartItems) { clickedItem ->
-            // Handle item click here
-            // You can open the edit_cart_popup or perform any other action
             showEditCartPopup(clickedItem)
         }
 
@@ -39,17 +39,10 @@ class CartActivity : AppCompatActivity() {
         cartRecyclerView.adapter = cartAdapter
 
         checkoutButton.setOnClickListener {
-            // Create an intent to start the CheckoutActivity
             val intent = Intent(this, CheckoutActivity::class.java)
-
-            // Pass any data you need to the CheckoutActivity using intent extras
-            // For example, you can pass the list of cart items
             intent.putExtra("cartItems", ArrayList(cartItems))
-
-            // Start the CheckoutActivity
             startActivity(intent)
         }
-
     }
 
     private fun showEditCartPopup(cartItem: CartItem) {

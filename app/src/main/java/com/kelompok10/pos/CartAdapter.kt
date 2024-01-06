@@ -10,10 +10,14 @@ import androidx.cardview.widget.CardView
 
 
 class CartAdapter(
-    private val cartItems: List<CartItem>,
+    private val cartItems: MutableList<CartItem>,
     private val onItemClick: (CartItem) -> Unit
 ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
+    fun addItem(cartItem: CartItem) {
+        cartItems.add(cartItem)
+        notifyItemInserted(cartItems.size - 1)  // Notify the adapter that an item has been inserted
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.cart_item, parent, false)
         return CartViewHolder(view)

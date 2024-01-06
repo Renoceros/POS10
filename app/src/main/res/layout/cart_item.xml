@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cartItemCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,24 +8,20 @@
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:background="?android:attr/selectableItemBackground">
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/itembg"
-    >
-    <LinearLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="@drawable/itembg">
 
         <TextView
             android:id="@+id/textIdCartItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="10030"></TextView>
+            android:text="10030"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/textNameCartItem"
@@ -33,30 +29,37 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textStyle="bold"
-            android:text="Thingamajig 20100"></TextView>
+            android:text="Thingamajig 20100"
+            app:layout_constraintStart_toEndOf="@+id/textIdCartItem"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/textQuantityCartItem"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textStyle="bold"
-            android:text="21"></TextView>
+            android:text="21"
+            app:layout_constraintStart_toEndOf="@+id/textNameCartItem"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/textPriceCartItem"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="3888888"></TextView>
+            android:text="3888888"
+            app:layout_constraintStart_toEndOf="@+id/textQuantityCartItem"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/textSubtotCartItem"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textStyle="bold"
-            android:text="99988888888"></TextView>
-    </LinearLayout>
-
-</RelativeLayout></androidx.cardview.widget.CardView>
+            android:text="99988888888"
+            app:layout_constraintStart_toEndOf="@+id/textPriceCartItem"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

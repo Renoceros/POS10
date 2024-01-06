@@ -30,32 +30,34 @@ import java.io.File
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+
 class ScannerActivity : AppCompatActivity() {
-    private val cartItems = mutableListOf<CartItem>()
     private lateinit var pageTitle: TextView
-    private lateinit var textClock: TextClock
+    private lateinit var textClock: TextView
     private lateinit var profileButton: ImageButton
     private lateinit var captureButton: Button
+    private lateinit var checkoutButton: Button
     private lateinit var binding: ScannerActivityBinding
     private lateinit var barcodeScanner: BarcodeScanner
     private lateinit var cameraExecutor: ExecutorService
+    private val cartItems = mutableListOf<CartItem>()
+    private lateinit var cartRecyclerView: RecyclerView
+    private lateinit var cartAdapter: CartAdapter
 
     private var imageCapture: ImageCapture? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.scanner_activity)
+
+        pageTitle = findViewById(R.id.Page_Title)
+        textClock = findViewById(R.id.textClock)
+        profileButton = findViewById(R.id.Profile_Button)
+        captureButton = findViewById(R.id.ScanButton)
+        checkoutButton = findViewById(R.id.CheckoutButton)
         binding = ScannerActivityBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        pageTitle = binding.PageTitle
-        textClock = binding.textClock
-        profileButton = binding.ProfileButton
-        captureButton = binding.ScanButton
-
-        profileButton.setOnClickListener {
-            val intent = Intent(this, ProfileActivity::class.java)
-            startActivity(intent)
-        }
 
         val options = BarcodeScannerOptions.Builder()
             .setBarcodeFormats(Barcode.FORMAT_CODE_128)
@@ -64,6 +66,7 @@ class ScannerActivity : AppCompatActivity() {
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
+        // Check camera permissions
         if (allPermissionGranted()) {
             startCamera()
         } else {
@@ -74,9 +77,29 @@ class ScannerActivity : AppCompatActivity() {
             )
         }
 
+        profileButton.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+
         captureButton.setOnClickListener {
             takePicture()
         }
+
+        checkoutButton.setOnClickListener {
+            val intent = Intent(this, CheckoutActivity::class.java)
+            intent.putExtra("cartItems", ArrayList(cartItems))
+            startActivity(intent)
+        }
+
+        // Set up RecyclerView
+        cartRecyclerView = findViewById(R.id.recyclerView)
+        cartAdapter = CartAdapter(cartItems) { clickedItem ->
+            showEditCartPopup(clickedItem)
+        }
+
+        cartRecyclerView.layoutManager = LinearLayoutManager(this)
+        cartRecyclerView.adapter = cartAdapter
     }
 
     private fun allPermissionGranted() =
@@ -223,10 +246,64 @@ class ScannerActivity : AppCompatActivity() {
 
             // Add the selected item to the cart
             val cartItem = CartItem(product.prodId.toString(), product.name, quantity, product.price, subTotal)
-            cartItems.add(cartItem)
+
+            // Use the addItem method to add the new item to the adapter
+            cartAdapter.addItem(cartItem)
 
             // Optionally, you can display a message or update UI to indicate the item is added to the cart
             Toast.makeText(this, "Added to Cart: ${product.name} (Quantity: $quantity)", Toast.LENGTH_SHORT).show()
+
+            // Dismiss the popup
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    private fun showEditCartPopup(cartItem: CartItem) {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.edit_cart_popup)
+
+        val textId = dialog.findViewById<TextView>(R.id.textId)
+        val textName = dialog.findViewById<TextView>(R.id.textName)
+        val textQuantity = dialog.findViewById<TextView>(R.id.textQuantity)
+        val textQuantityValue = dialog.findViewById<TextView>(R.id.textQuantityValue)
+        val btnDecrease = dialog.findViewById<Button>(R.id.btnDecrease)
+        val btnIncrease = dialog.findViewById<Button>(R.id.btnIncrease)
+        val btnEditCartItem = dialog.findViewById<Button>(R.id.btnAddToCart)
+
+        textId.text = "ID: ${cartItem.id}"
+        textName.text = "Name: ${cartItem.name}"
+        textQuantity.text = "Quantity: "
+
+        var quantity = cartItem.quantity
+        textQuantityValue.text = quantity.toString()
+
+        btnDecrease.setOnClickListener {
+            if (quantity > 1) {
+                quantity--
+                textQuantityValue.text = quantity.toString()
+            }
+        }
+
+        btnIncrease.setOnClickListener {
+            // Check if quantity is within available stock
+            if (quantity < getStockQuantityFromDatabase(cartItem.id)) {
+                quantity++
+                textQuantityValue.text = quantity.toString()
+            }
+            else {
+                // Optionally, you can display a message indicating that the stock is limited.
+                Toast.makeText(this, "Reached maximum stock limit", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        btnEditCartItem.setOnClickListener {
+            // Update the quantity of the cartItem
+            cartItem.quantity = quantity
+
+            // Optionally, you can display a message or update UI to indicate the item is updated in the cart
+            Toast.makeText(this, "Cart item updated: ${cartItem.name} (Quantity: $quantity)", Toast.LENGTH_SHORT).show()
 
             // Dismiss the popup
             dialog.dismiss()

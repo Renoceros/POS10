@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/transactionItemView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,43 +8,51 @@
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:background="?android:attr/selectableItemBackground">
-    <RelativeLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/DateTimeTextView"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:text="21"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/headerIdTextView"/>
 
-            <TextView
-                android:id="@+id/DateTimeTextView"
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
-                android:text="21"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/headerIdTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="00000"
+            app:layout_constraintStart_toEndOf="@+id/DateTimeTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/userIdTextView"/>
 
-            <TextView
-                android:id="@+id/headerIdTextView"
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
-                android:text="00000" />
+        <TextView
+            android:id="@+id/userIdTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="00000"
+            app:layout_constraintStart_toEndOf="@+id/headerIdTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/totalamountTextView"/>
 
-            <TextView
-                android:id="@+id/userIdTextView"
-                android:layout_width="83dp"
-                android:layout_height="match_parent"
-                android:text="00000" />
-            <TextView
-                android:id="@+id/totalamountTextView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:textAlignment="textEnd"
-                android:textStyle="bold"
-                android:text="99988888888"/>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/totalamountTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="99988888888"
+            android:textAlignment="textEnd"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/userIdTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </RelativeLayout></androidx.cardview.widget.CardView>
+</androidx.cardview.widget.CardView>

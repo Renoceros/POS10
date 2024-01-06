@@ -10,44 +10,51 @@
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:background="?android:attr/selectableItemBackground">
-    <RelativeLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/textNameReceiptItem"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:text="Thingamajig 20100"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textQuantityReceiptItem"/>
 
-            <TextView
-                android:id="@+id/textNameReceiptItem"
-                android:layout_width="146dp"
-                android:layout_height="match_parent"
-                android:text="Thingamajig 20100" />
+        <TextView
+            android:id="@+id/textQuantityReceiptItem"
+            android:layout_width="41dp"
+            android:layout_height="wrap_content"
+            android:text="21"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/textNameReceiptItem"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textPriceReceiptItem"/>
 
-            <TextView
-                android:id="@+id/textQuantityReceiptItem"
-                android:layout_width="41dp"
-                android:layout_height="match_parent"
-                android:text="21"
-                android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/textPriceReceiptItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="388008888"
+            app:layout_constraintStart_toEndOf="@+id/textQuantityReceiptItem"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textSubtotReceiptItem"/>
 
-            <TextView
-                android:id="@+id/textPriceReceiptItem"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="388008888"/>
+        <TextView
+            android:id="@+id/textSubtotReceiptItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="99988888888"
+            android:textAlignment="textEnd"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/textPriceReceiptItem"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/textSubtotReceiptItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:textAlignment="textEnd"
-                android:textStyle="bold"
-                android:text="99988888888"/>
-        </LinearLayout>
-
-    </RelativeLayout></androidx.cardview.widget.CardView>
+</androidx.cardview.widget.CardView>
